@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service DJ - DJ Fab</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        form {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            text-align: left;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 400px;
+        }
+        label, input, select {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay loop muted>
+        <source src="31377-386628887_small.mp4" type="video/mp4">
+    </video>
+    <h1>Service DJ</h1>
+    <form id="djForm">
+        <label for="event">Nom de l'événement :</label>
+        <input type="text" id="event" name="event" required>
+
+        <label for="date">Date de l'événement :</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="duration">Durée (en heures) :</label>
+        <input type="number" id="duration" name="duration" placeholder="Entrez la durée" required>
+
+        <label for="isBigEvent">Grand événement :</label>
+        <select id="isBigEvent" name="isBigEvent" required>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+        </select>
+
+        <button type="button" onclick="calculateAndSend()">Calculer</button>
+    </form>
+    <script>
+        function calculateAndSend() {
+            const event = document.getElementById('event').value;
+            const date = document.getElementById('date').value;
+            const duration = document.getElementById('duration').value;
+            const isBigEvent = document.getElementById('isBigEvent').value === 'oui';
+            const hourlyRate = isBigEvent ? 100 : 75;
+            const totalCost = duration * hourlyRate;
+
+            const emailBody = `Nom de l'événement : ${event}%0D%0A`
+                + `Date : ${date}%0D%0A`
+                + `Durée : ${duration} heures%0D%0A`
+                + `Grand événement : ${isBigEvent ? 'Oui' : 'Non'}%0D%0A`
+                + `Total : ${totalCost} CHF%0D%0A`;
+
+            const mailtoLink = `mailto:fabiodjf100@gmail.com?subject=Demande de tarif - Service DJ&body=${emailBody}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>
